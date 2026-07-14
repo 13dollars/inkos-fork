@@ -1,4 +1,4 @@
-# InkOS 本地工作台（小红书分发版）
+# InkOS 本地工作台 - 本地一键版
 
 > 这是基于开源项目 [InkOS](https://github.com/Narcooo/inkos) 的**本地一键启动版**。
 > 严格遵循 AGPL-3.0 开源协议，详情见本目录 `LICENSE` 和 `NOTICE` 文件。

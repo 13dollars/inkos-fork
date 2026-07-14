@@ -1,5 +1,5 @@
 # InkOS 本地工作台 — 开发者构建脚本
-# 用途：在开发者机器上构建"小红书分发版"压缩包。
+# 用途：在开发者机器上构建"本地一键版"压缩包。
 # 来源：本 fork 新增。详见 LICENSE / NOTICE。
 # 用法：在 fork 仓库根目录打开 PowerShell，执行  powershell -ExecutionPolicy Bypass -File .\build-dist.ps1
 [CmdletBinding()]
@@ -179,6 +179,6 @@ Write-Host "  大小:   $([math]::Round($size / 1MB, 2)) MB" -ForegroundColor Gr
 Write-Host "============================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "下一步：" -ForegroundColor Cyan
-Write-Host "  1. 把这个 zip 上传到小红书 / 网盘" -ForegroundColor Cyan
+Write-Host "  1. 把这个 zip 上传到网盘 / 邮件" -ForegroundColor Cyan
 Write-Host "  2. 笔记里挂上下载链接 + NOTICE 里的源码仓库 URL" -ForegroundColor Cyan
 Write-Host "  3. 自己解压到临时目录测一次再发布" -ForegroundColor Cyan
