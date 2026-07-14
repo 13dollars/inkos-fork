@@ -88,10 +88,17 @@ Copy-Item -Force (Join-Path $RepoRoot "packages\core\package.json")   (Join-Path
     $_ | ConvertTo-Json -Depth 10 | Set-Content (Join-Path $CoreDeployDir "package.json") -Encoding UTF8
 }
 
-# 5.5 删除 npm install 带来的无关文件
-Get-ChildItem -Path $StageDir -Recurse -Force -Include @("package-lock.json", ".package-lock.json") -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
-if (Test-Path (Join-Path $StageDir "node_modules\.cache")) {
-    Remove-Item (Join-Path $StageDir "node_modules\.cache") -Recurse -Force -ErrorAction SilentlyContinue
+# 5.5 删除 npm install 带来的无关文件（用直接路径，避免 Get-ChildItem -Recurse 在 5 万文件 node_modules 上极慢）
+$pathsToDelete = @(
+    (Join-Path $StageDir "package-lock.json"),
+    (Join-Path $StageDir ".package-lock.json"),
+    (Join-Path $StageDir "node_modules\.cache")
+)
+foreach ($p in $pathsToDelete) {
+    if (Test-Path $p) {
+        Remove-Item $p -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Host "  清理: $p" -ForegroundColor DarkGray
+    }
 }
 
 # 5.6 补充启动脚本和合规文件
@@ -109,6 +116,29 @@ foreach ($item in @("启动 InkOS.bat", "start.sh", "start.command", ".env.examp
 $scriptsDeployDir = Join-Path $StageDir "scripts"
 if (-not (Test-Path $scriptsDeployDir)) { New-Item -ItemType Directory -Force -Path $scriptsDeployDir | Out-Null }
 Copy-Item -Force (Join-Path $RepoRoot "scripts\launch.js") (Join-Path $scriptsDeployDir "launch.js")
+
+# 5.6c 复制 runtime/（便携 Node.js，让买家在 Windows 上零依赖启动）
+$runtimeDeployDir = Join-Path $StageDir "runtime"
+if (Test-Path (Join-Path $RepoRoot "runtime")) {
+    if (-not (Test-Path $runtimeDeployDir)) { New-Item -ItemType Directory -Force -Path $runtimeDeployDir | Out-Null }
+    $runtimeSize = (Get-ChildItem (Join-Path $RepoRoot "runtime") -Recurse -File | Measure-Object -Property Length -Sum).Sum
+    Write-Host "  复制 runtime/ (便携 Node.js，约 $([math]::Round($runtimeSize/1MB, 2)) MB)..." -ForegroundColor DarkCyan
+    # 单独复制每个子目录的内容，避免源 runtime/ 顶层污染
+    foreach ($sub in Get-ChildItem (Join-Path $RepoRoot "runtime") -Directory -Force) {
+        $subName = $sub.Name
+        $subDst = Join-Path $runtimeDeployDir $subName
+        if (-not (Test-Path $subDst)) { New-Item -ItemType Directory -Force -Path $subDst | Out-Null }
+        Get-ChildItem $sub.FullName -Force | ForEach-Object {
+            Copy-Item -Force $_.FullName (Join-Path $subDst $_.Name)
+        }
+    }
+    # 复制 runtime/ 顶层文件（如果存在，比如 README）
+    Get-ChildItem (Join-Path $RepoRoot "runtime") -File -Force | ForEach-Object {
+        Copy-Item -Force $_.FullName (Join-Path $runtimeDeployDir $_.Name)
+    }
+} else {
+    Write-Host "  [警告] 未找到 runtime/ 目录，跳过便携 Node.js 打包" -ForegroundColor DarkYellow
+}
 
 # 5.7 写入 LICENSE / NOTICE / README
 foreach ($item in @("LICENSE", "NOTICE", "README.分发.md")) {
