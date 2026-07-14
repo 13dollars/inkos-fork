@@ -1,5 +1,5 @@
 InkOS 本地工作台（小红书分发版）
-Copyright (C) 2026  <TODO: 请填写你的名字或昵称>
+Copyright (C) 2026  13dollars
 
 本项目是 InkOS 的衍生作品，基于上游版本 1.7.0 改造。
 
@@ -21,7 +21,7 @@ Copyright (C) 2026  <TODO: 请填写你的名字或昵称>
 
 == 完整对应源码 ==
 本衍生作品的完整源代码（含本次修改的 diff）可在以下位置获取：
-- TODO: 请填写你的公开 fork 仓库 URL，例如 https://github.com/<your-name>/inkos-fork
+- https://github.com/13dollars/inkos-fork
 - 备份: TODO: 可选的网盘/邮件获取方式（如有）
 
 按 AGPL-3.0 第 13 条要求，本目录及上游仓库均可下载/克隆完整源码。

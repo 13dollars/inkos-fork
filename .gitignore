@@ -32,5 +32,8 @@ inkos.json
 prompt/
 CLAUDE.md
 
-# 分发包构建产物（zip 本身进 git，stage 是可重建中间产物）
+# 分发包构建产物
+# - stage/ 是可重建中间目录
+# - *.zip 是打包产物，发布走 GitHub Releases（不进 git，避免单文件超 100MB 限制）
 dist-zip/stage/
+dist-zip/*.zip
