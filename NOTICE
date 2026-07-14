@@ -1,0 +1,41 @@
+InkOS 本地工作台（小红书分发版）
+Copyright (C) 2026  <TODO: 请填写你的名字或昵称>
+
+本项目是 InkOS 的衍生作品，基于上游版本 1.7.0 改造。
+
+== 上游项目 ==
+项目名：InkOS
+原始作者：Narcooo（@actalk）
+原始仓库：https://github.com/Narcooo/inkos
+原始 npm 包：@actalk/inkos, @actalk/inkos-core
+原始许可证：GNU Affero General Public License v3 (AGPL-3.0)
+原始 LICENSE：见本目录 LICENSE 文件
+
+== 本版本相对上游的修改 ==
+1. 新增一键启动脚本（启动 InkOS.bat / start.sh / start.command / scripts/launch.js）
+2. 新增中文使用说明（README.分发.md）
+3. 新增本 NOTICE 文件，说明修改内容与源码获取方式
+4. 新增 build-dist 脚本（build-dist.ps1 / build-dist.sh），仅开发者使用，不进入分发包
+5. 未修改 InkOS 任何源代码文件的功能、行为、依赖或 API
+6. 重新打包分发，仅做离线部署适配，未对核心逻辑做任何定制
+
+== 完整对应源码 ==
+本衍生作品的完整源代码（含本次修改的 diff）可在以下位置获取：
+- TODO: 请填写你的公开 fork 仓库 URL，例如 https://github.com/<your-name>/inkos-fork
+- 备份: TODO: 可选的网盘/邮件获取方式（如有）
+
+按 AGPL-3.0 第 13 条要求，本目录及上游仓库均可下载/克隆完整源码。
+
+== 第三方依赖致谢 ==
+InkOS 构建于 pi-mono 之上（@mariozechner/pi-ai, @mariozechner/pi-agent-core）。
+其他依赖详见 packages/core/package.json 与 packages/cli/package.json。
+所有第三方依赖的许可证信息以各自项目的 LICENSE 为准。
+
+== AGPL 第 13 条提示 ==
+本作品仅作为本地软件分发。如您将其作为网络服务对外提供，
+根据 AGPL-3.0 第 13 条，您必须向所有交互过该服务的用户提供
+完整对应源代码（参见上文的"完整对应源码"章节）。
+
+== 免责声明 ==
+本作品按"原样"提供，不承担任何使用责任。
+上游 InkOS 项目及其贡献者不对本衍生作品提供任何支持或担保。
